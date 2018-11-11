@@ -15,6 +15,9 @@
 		61A49A0B21961D8600EEF75A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61A49A0921961D8600EEF75A /* Main.storyboard */; };
 		61A49A0D21961D8700EEF75A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61A49A0C21961D8700EEF75A /* Assets.xcassets */; };
 		61A49A1021961D8700EEF75A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61A49A0E21961D8700EEF75A /* LaunchScreen.storyboard */; };
+		61B582022197C11A00804A45 /* GameSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B582012197C11A00804A45 /* GameSprite.swift */; };
+		61B582042197C2E200804A45 /* Bee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B582032197C2E200804A45 /* Bee.swift */; };
+		61B5822E2197ECD400804A45 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5822D2197ECD400804A45 /* Ground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		61A49A0C21961D8700EEF75A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61A49A0F21961D8700EEF75A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		61A49A1121961D8700EEF75A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61B582012197C11A00804A45 /* GameSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSprite.swift; sourceTree = "<group>"; };
+		61B582032197C2E200804A45 /* Bee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bee.swift; sourceTree = "<group>"; };
+		61B5822D2197ECD400804A45 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,9 @@
 		61A499FE21961D8600EEF75A /* Pablo the Penguin */ = {
 			isa = PBXGroup;
 			children = (
+				61B5822D2197ECD400804A45 /* Ground.swift */,
+				61B582032197C2E200804A45 /* Bee.swift */,
+				61B582012197C11A00804A45 /* GameSprite.swift */,
 				61A499FF21961D8600EEF75A /* AppDelegate.swift */,
 				61A49A0121961D8600EEF75A /* GameScene.sks */,
 				61A49A0321961D8600EEF75A /* Actions.sks */,
@@ -146,6 +155,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61B5822E2197ECD400804A45 /* Ground.swift in Sources */,
+				61B582042197C2E200804A45 /* Bee.swift in Sources */,
+				61B582022197C11A00804A45 /* GameSprite.swift in Sources */,
 				61A49A0621961D8600EEF75A /* GameScene.swift in Sources */,
 				61A49A0821961D8600EEF75A /* GameViewController.swift in Sources */,
 				61A49A0021961D8600EEF75A /* AppDelegate.swift in Sources */,
@@ -297,6 +309,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SPUKTJZVPR;
 				INFOPLIST_FILE = "Pablo the Penguin/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,6 +328,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SPUKTJZVPR;
 				INFOPLIST_FILE = "Pablo the Penguin/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
