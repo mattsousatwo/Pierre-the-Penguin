@@ -7,83 +7,40 @@
 //
 
 import SpriteKit
-import GameplayKit
+
 
 class GameScene: SKScene {
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
-    
+    // didMove is called evertime the GameScene class is called
     override func didMove(to view: SKView) {
+        // Make the scene Position from its lower left corner, regardless of any other settings:
+        self.anchorPoint = .zero
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+       // set the scenes background
+        // NOTE:  UIColor uses a scale from 0 to 1 for its colors
+        self.backgroundColor = UIColor(red: 0.4, green: 0.66, blue: 0.95, alpha: 1.0)
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+        // create our bee sprite node
+        // NOTE: Remove all prior arguments from this line
+        let bee = SKSpriteNode()
+        bee.position = CGPoint(x: 250, y: 250)
+        bee.size = CGSize(width: 28, height: 24)
+        self.addChild(bee)
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
+        // find our new bee texture atlas
+        let beeAtlas = SKTextureAtlas(named: "Enimies")
+        // Grab the two bee frames from the texture atlas in an array
+        // Note: Check out the syntax explicitly declaring bee-Frames
+        // as an array of SKTextures/ this is not strictly necessary but it makes the intent of the codde more readable, so I chose to include the explicit type declaration here:
+        let beeFrames: [SKTexture] = [
+        beeAtlas.textureNamed("bee"),
+        beeAtlas.textureNamed("bee-fly")]
+        // create a new SKAction to animate between the frames once
+        let flyAction = SKAction.animate(with: beeFrames, timePerFrame: 0.14)
+        // create an action to repeate the action
+        let beeAction = SKAction.repeatForever(flyAction)
+        // instruct our bee to use beeAction
+        bee.run(beeAction)
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
     }
 }
