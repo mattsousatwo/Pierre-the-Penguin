@@ -8,17 +8,14 @@
 
 import SpriteKit
 
+
 class GameScene: SKScene {
-    // Create a constant cam as a SKCameraNode:
+    // Creat/Users/mattSousa/Xcode Storage 2018/Pablo the Penguin/Pablo the Penguine a constant cam as a SKCameraNode:
     let cam = SKCameraNode()
     let ground = Ground()
-    // Create our bee node as a property of GameScene so we can
-    // access it throughout the class
-    // (Make sure to remove the old bee declaration below)
-    let bee = SKSpriteNode()
+   let player = Player()
     
-    
-    
+   
     
     override func didMove(to view: SKView) {
         self.anchorPoint = .zero
@@ -27,12 +24,6 @@ class GameScene: SKScene {
         
         // Assign the camera to the scene
         self.camera = cam
-        
-        // Call the new bee function
-        self.addTheFlyingBee() 
-        
-        // Add background
-        self.addBackground()
         
         // second bee
         let bee2 = Bee()
@@ -43,10 +34,11 @@ class GameScene: SKScene {
         bee3.position = CGPoint(x:200, y:325)
         self.addChild(bee3)
         
+        
         // Position the ground based on the screen size
         // Position X: Negative one screen width
         // Position Y: 150 above the bottom (remember the top left anchor point)
-        ground.position = CGPoint(x: -self.size.width * 2, y: 150)
+        ground.position = CGPoint(x: -self.size.width * 2, y: 30)
         
         // set the ground width to 3x the width of the scene
         // The height can be 0, our child nodes will create the height
@@ -55,66 +47,43 @@ class GameScene: SKScene {
         ground.createChildren()
         self.addChild(ground)
         
+        
+        // Position the player:
+        player.position = CGPoint(x: 150, y: 250)
+        // add the player node to the scene:
+        self.addChild(player)
+        
+      
     } 
     
     // A new function
     override func didSimulatePhysics() {
-        // Keep the camera centered on the bee
-        // Notice the ! operator after camera. SKScene's camera
-        // is an optional, but we know it is there since we
-        // assigned it above in the didMove function. We can tell
-        // Swift that we know it can unwrap this value by using
-        // the ! operator after the property name.
-        self.camera!.position = bee.position
+        
+       self.camera!.position = player.position
     }
     
-    func addBackground() {
-        
-        let bg = SKSpriteNode(imageNamed:"background-menu")
-        bg.position = CGPoint(x: 250, y: 250)
-        self.addChild(bg)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in (touches) {
+            // Find the location of the touch:
+            let location = touch.location(in: self)
+            // locate the node at this location:
+            let nodeTouched = atPoint(location)
+            // Attempt to downcast the node to the GameSprite protocol
+            if let gameSprite = nodeTouched as? GameSprite {
+                // if this node adheres to GameSprite, call onTap:
+                gameSprite.onTap()
+            }
+        }
     }
     
-    // I moved all of our bee animation code into a new function:
-     func addTheFlyingBee() {
-        // Position our bee
-        bee.position = CGPoint(x: 250, y: 250)
-        bee.size = CGSize(width: 28, height: 24)
-        // Add the bee to the scene
-        self.addChild(bee)
+    
+    
+    override func update(_ currentTime: TimeInterval) {
         
-        // Find the bee textures from the texture atlas
-        let beeAtlas = SKTextureAtlas(named:"Enemies")
-        let beeFrames:[SKTexture] = [
-            beeAtlas.textureNamed("bee"),
-            beeAtlas.textureNamed("bee-fly")]
-        // Create a new SKAction to animate between the frames
-        let flyAction = SKAction.animate(with: beeFrames,
-                                         timePerFrame: 0.14)
-        // Create an SKAction to run the flyAction repeatedly
-        let beeAction = SKAction.repeatForever(flyAction)
-        // Instruct our bee to run the final repeat action:
-        bee.run(beeAction)
+        player.update()
         
-        // Set up new actions to move our bee back and forth:
-        let pathLeft =
-            SKAction.moveBy(x: -200, y: -10, duration: 2)
-        let pathRight =
-            SKAction.moveBy(x: 200, y: 10, duration: 2)
-        let flipTextureNegative =
-            SKAction.scaleX(to: -1, duration: 0)
-        let flipTexturePositive =
-            SKAction.scaleX(to: 1, duration: 0)
-        // Combine actions into a cohesive flight sequence
-        let flightOfTheBee = SKAction.sequence([
-            pathLeft,flipTextureNegative, pathRight,
-            flipTexturePositive])
-        // Last, create a looping action that will repeat forever
-        let neverEndingFlight =
-            SKAction.repeatForever(flightOfTheBee)
-        
-        // Tell our bee to run the flight path, and away it goes!
-        bee.run(neverEndingFlight)
+
     }
+    
 }
 

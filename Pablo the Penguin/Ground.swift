@@ -38,6 +38,14 @@ class Ground: SKSpriteNode, GameSprite {
             
             tileCount += 1
         }
+        
+        // Draw an edge physics body along the top of the ground node
+        // NOTE: physics body positions are relative to their nodes
+        // the top left of the node is X: 0, Y: 0, given o  ur anchor point
+        // the top right of the node is X: size.width, Y: 0
+        let pointTopLeft = CGPoint(x: 0, y: 0)
+        let pointTopRight = CGPoint(x: size.width, y: 0)
+        self.physicsBody = SKPhysicsBody(edgeFrom: pointTopLeft, to: pointTopRight)
        
     }
     

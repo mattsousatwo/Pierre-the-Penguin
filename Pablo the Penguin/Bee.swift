@@ -31,6 +31,10 @@ class Bee: SKSpriteNode, GameSprite {
         createAnimations()
         self.run(flyAnimation)
         
+        // Attach a physics body, shaped like a circle and sized roughly to our bee
+        self.physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2 )
+        self.physicsBody?.affectedByGravity = false
+        
     }
     
     // Our bee only implements one texture based animation.
